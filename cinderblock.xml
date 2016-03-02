@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <cinder>
 <block
-	name="CoC - Paramters"
+	name="CoC-Parameters"
 	id=""
 	author="Rene Christen"
 	summary="Utils to load/save parameters to XML"
