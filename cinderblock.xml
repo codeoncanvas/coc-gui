@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <cinder>
 <block
-	name="CoC-Parameters"
+	name="CoC-Gui"
 	id=""
 	author="Rene Christen"
-	summary="Utils to load/save parameters to XML"
+	summary="Wrapper and utility functions for use with Cinder-Imgui."
 	license=""
 	git=""
 	version=""
