@@ -6,7 +6,8 @@
 	author="Rene Christen"
 	summary="Wrapper and utility functions for use with Cinder-Imgui."
 	license=""
-	git=""
+	url="https://github.com/codeoncanvas/coc-gui"
+	git="git://github.com/codeoncanvas/coc-gui.git"
 	version=""
 	library=""
 	>
