@@ -2,7 +2,6 @@
 
 #include "cinder/Xml.h"
 #include "cinder/Log.h"
-#include "cinder/Log.h"
 
 #include <fstream>
 
@@ -10,8 +9,9 @@ namespace coc {
 
 enum parameterType {
 	PARAM_FLOAT = 0,
-	PARAM_INT,
-	PARAM_BOOL
+	PARAM_INT = 1,
+	PARAM_BOOL = 2,
+	PARAM_VEC2 = 10
 };
 
 struct Parameter {
@@ -33,6 +33,7 @@ void registerParameter( std::string _name, T *_val )
 	if (std::is_same<T, float>::value) parameters.back().type = PARAM_FLOAT;
 	else if (std::is_same<T, int>::value) parameters.back().type = PARAM_INT;
 	else if (std::is_same<T, bool>::value) parameters.back().type = PARAM_BOOL;
+	else if (std::is_same<T, glm::vec2>::value) parameters.back().type = PARAM_VEC2;
 
 }
 
@@ -55,6 +56,10 @@ static void saveParameters( std::string _filename = "config_params.xml" )
 				break;
 			case PARAM_BOOL:
 				p.setAttribute( "val", (int) *(bool*) parameters[i].val );
+				break;
+			case PARAM_VEC2:
+				p.setAttribute( "x", (*(glm::vec2*) parameters[i].val).x );
+				p.setAttribute( "y", (*(glm::vec2*) parameters[i].val).y );
 				break;
 		}
 
@@ -101,6 +106,10 @@ static void loadParameters( std::string _filename = "config_params.xml" )
 						break;
 					case PARAM_BOOL:
 						*(bool *) parameters[i].val = (bool) parameter->getAttributeValue<int>( "val", 0 );
+						break;
+					case PARAM_VEC2:
+						(*(glm::vec2 *) parameters[i].val).x = parameter->getAttributeValue<float>( "x", 0 );
+						(*(glm::vec2 *) parameters[i].val).y = parameter->getAttributeValue<float>( "y", 0 );
 						break;
 				}
 
