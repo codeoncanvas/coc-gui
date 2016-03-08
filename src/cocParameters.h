@@ -2,7 +2,7 @@
  *
  * 	USAGE:
  *
- * 	coc::parameters()->register("variableName",&variable);
+ * 	coc::parameters()->registerParam("variableName",&variable);
  * 	coc::parameters()->load();
  * 	...
  * 	coc::parameters()->save();
@@ -36,7 +36,7 @@ class Parameters {
 public:
 
 	template<typename T>
-	void register( std::string _name, T *_val )
+	void registerParam( std::string _name, T *_val )
 	{
 		params.push_back(Parameter());
 		params.back().name = _name;
