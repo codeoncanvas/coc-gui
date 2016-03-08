@@ -36,7 +36,7 @@ class Parameters {
 public:
 
 	template<typename T>
-	void registerParameter( std::string _name, T *_val )
+	void register( std::string _name, T *_val )
 	{
 		params.push_back(Parameter());
 		params.back().name = _name;
@@ -47,8 +47,8 @@ public:
 		else if (std::is_same<T, glm::vec2>::value) params.back().type = PARAM_VEC2;
 	}
 
-	void saveParameters( std::string _filename = "config_params.xml" );
-	void loadParameters( std::string _filename = "config_params.xml" );
+	void save( std::string _filename = "config_params.xml" );
+	void load( std::string _filename = "config_params.xml" );
 
 
 	static Parameters* instance();

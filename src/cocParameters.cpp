@@ -14,7 +14,7 @@ Parameters* Parameters::instance()
 }
 
 
-void Parameters::saveParameters( std::string _filename )
+void Parameters::save( std::string _filename )
 {
 
 	ci::XmlTree xml("parameters","");
@@ -49,7 +49,7 @@ void Parameters::saveParameters( std::string _filename )
 
 }
 
-void Parameters::loadParameters( std::string _filename )
+void Parameters::load( std::string _filename )
 {
 
 	ci::XmlTree xml;
