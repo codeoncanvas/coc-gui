@@ -35,6 +35,8 @@ struct Parameter {
 class Parameters {
 public:
 
+    Parameters();
+
 	template<typename T>
 	void registerParam( std::string _name, T *_val )
 	{
@@ -56,7 +58,6 @@ public:
 private:
 
 	static Parameters* pInst;
-	Parameters();
 
 	std::vector<coc::Parameter> params;
 };
