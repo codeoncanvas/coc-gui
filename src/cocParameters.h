@@ -11,6 +11,7 @@
 
 #pragma once
 
+#include "cinder/app/App.h"
 #include "cinder/Xml.h"
 #include "cinder/Log.h"
 #include <fstream>
