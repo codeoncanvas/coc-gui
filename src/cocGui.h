@@ -4,6 +4,12 @@
 #include "CinderImGui.h"
 #include "cocParameters.h"
 
+/*
+ * TODO:
+ * - update to use TextBrowser object for wiki
+ * - update save params code
+ */
+
 namespace coc {
 
 
