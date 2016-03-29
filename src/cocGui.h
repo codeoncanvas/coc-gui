@@ -6,10 +6,6 @@
 
 namespace coc {
 
-//todo: remove
-using namespace std;
-using namespace ci;
-using namespace ci::app;
 
 class Gui {
 public:
@@ -29,9 +25,9 @@ public:
 	void setup() {
 
 		//load wiki
-		vector<string> filenames = listDirectory("wiki",false);
+		std::vector<std::string> filenames = listDirectory("wiki",false);
 		for (int i=0; i<filenames.size(); i++) {
-			string content = loadString( loadAsset( "wiki/" + filenames[i] ) );
+			std::string content = ci::loadString( ci::app::loadAsset( "wiki/" + filenames[i] ) );
 			pages.push_back( WikiPage() );
 			pages.back().name = filenames[i];
 			pages.back().content = content;
@@ -40,7 +36,7 @@ public:
 		//todo: register key events
 	}
 
-	string getKeyShortcutString( std::string _key )
+	std::string getKeyShortcutString( std::string _key )
 	{
 #if defined CINDER_MSW
 		return "Ctrl+"+_key;
@@ -66,7 +62,7 @@ public:
 					break;
 				case 's':
 				case 'S':
-					if (isUsingParams) ::coc::saveParameters();
+//					if (isUsingParams) ::coc::saveParameters();
 					break;
 			}
 
@@ -135,15 +131,15 @@ public:
 private:
 
 	struct WikiPage {
-		string name;
-		string content;
+		std::string name;
+		std::string content;
 	};
-	vector<WikiPage> pages;
+	std::vector<WikiPage> pages;
 
 	std::vector<std::string> listDirectory( std::string _path, bool _verbose = false ) {
 
 		std::vector<std::string> files;
-		fs::path p( ci::app::getAssetPath( _path ) );
+		ci::fs::path p( ci::app::getAssetPath( _path ) );
 
 		if (_verbose) ci::app::console()<< "About to list " << ci::app::getAssetPath( _path ) << ":\n";
 
@@ -151,7 +147,7 @@ private:
 
 			for ( boost::filesystem::directory_iterator it( p ); it != boost::filesystem::directory_iterator(); ++it )
 			{
-				if ( fs::is_regular_file( *it ) )
+				if ( ci::fs::is_regular_file( *it ) )
 				{
 					std::string fileName = it->path().filename().string();
 
