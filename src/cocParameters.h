@@ -22,6 +22,7 @@ enum parameterType {
 	PARAM_FLOAT = 0,
 	PARAM_INT = 1,
 	PARAM_BOOL = 2,
+	PARAM_STR = 3,
 	PARAM_VEC2 = 10
 };
 

@@ -3,6 +3,8 @@
 
 namespace coc {
 
+using namespace std;
+
 Parameters::Parameters(){}
 Parameters* Parameters::pInst = nullptr;
 Parameters* Parameters::instance()
@@ -33,6 +35,9 @@ void Parameters::save( std::string _filename )
 				break;
 			case PARAM_BOOL:
 				p.setAttribute( "val", (int) *(bool*) params[i].val );
+				break;
+			case PARAM_STR:
+				p.setAttribute( "val", *(string*) params[i].val );
 				break;
 			case PARAM_VEC2:
 				p.setAttribute( "x", (*(glm::vec2*) params[i].val).x );
@@ -83,6 +88,9 @@ void Parameters::load( std::string _filename )
 						break;
 					case PARAM_BOOL:
 						*(bool *) params[i].val = (bool) parameter->getAttributeValue<int>( "val", 0 );
+						break;
+					case PARAM_STR:
+						*(string *) params[i].val = parameter->getAttributeValue<string>( "val", "" );
 						break;
 					case PARAM_VEC2:
 						(*(glm::vec2 *) params[i].val).x = parameter->getAttributeValue<float>( "x", 0 );
