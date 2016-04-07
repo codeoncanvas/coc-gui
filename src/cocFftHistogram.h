@@ -22,9 +22,10 @@ public:
 
 	}
 
+	void connectNode( audio::GainNodeRef _ref ) { _ref >> monitorSpectralNode; }
+	void connectNode( audio::BufferPlayerNodeRef _ref ) { _ref >> monitorSpectralNode; }
 
-	void update( audio::BufferPlayerNodeRef _ref) {
-		_ref >> monitorSpectralNode;
+	void update() {
 		magSpectrum = monitorSpectralNode->getMagSpectrum();
 	}
 
@@ -39,7 +40,7 @@ public:
 
 
 private:
-
+	ci::audio::MonitorNodeRef			monitorNode;
 	ci::audio::MonitorSpectralNodeRef	monitorSpectralNode;
 	std::vector<float>					magSpectrum;
 	std::string 						label;
