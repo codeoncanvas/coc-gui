@@ -48,6 +48,7 @@ public:
 		if (std::is_same<T, float>::value) params.back().type = PARAM_FLOAT;
 		else if (std::is_same<T, int>::value) params.back().type = PARAM_INT;
 		else if (std::is_same<T, bool>::value) params.back().type = PARAM_BOOL;
+		else if (std::is_same<T, std::string>::value) params.back().type = PARAM_STR;
 		else if (std::is_same<T, glm::vec2>::value) params.back().type = PARAM_VEC2;
 	}
 
