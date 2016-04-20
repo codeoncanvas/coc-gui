@@ -31,7 +31,7 @@ public:
 
 
 	void updateUI() {
-		ui::PlotHistogram(label.c_str(), &magSpectrum[0], magSpectrum.size(), 0, NULL, 0.0f, 1.0f, glm::ivec2(0,100) );
+		if (magSpectrum.size()) ui::PlotHistogram(label.c_str(), &magSpectrum[0], magSpectrum.size(), 0, NULL, 0.0f, 1.0f, glm::ivec2(0,100) );
 
 	}
 
