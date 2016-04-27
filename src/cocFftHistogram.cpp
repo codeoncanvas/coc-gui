@@ -145,7 +145,12 @@ void FftHistogram::updateUI()
 	if ( fftData.data.size() ) {
 
 		ImVec2 p = ui::GetCursorScreenPos();
-		ui::PlotHistogram( label.c_str(), &fftData.data[0], fftData.size, 0, NULL, 0.0f, 1.0f, glm::ivec2( 0, 100 ) );
+		if (useNormVals) {
+			ui::PlotHistogram( label.c_str(), &fftData.dataNorm[0], fftData.size, 0, NULL, 0.0f, 1.0f, glm::ivec2( 0, 100 ) );
+		}
+		else {
+			ui::PlotHistogram( label.c_str(), &fftData.data[0], fftData.size, 0, NULL, 0.0f, 1.0f, glm::ivec2( 0, 100 ) );
+		}
 
 		ui::SameLine();
 		static int labelW = 28;
@@ -161,7 +166,7 @@ void FftHistogram::updateUI()
 			ImVec2 newP;
 			newP.x = p.x + i * w;
 			newP.y = p.y + lmap<float>( getFftPeakData()[i], 0, 1, 100, 0 );
-			draw_list->AddLine( ImVec2( newP.x, newP.y ), ImVec2( newP.x + w, newP.y ), col32 );
+			draw_list->AddLine( ImVec2( newP.x, newP.y ), ImVec2( newP.x + w -1, newP.y ), col32 );
 		}
 
 		ui::Text( "\n" );

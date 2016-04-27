@@ -54,6 +54,13 @@ public:
 
 	bool setUseNormVals( bool _use );
 
+	// FOR GUI:
+
+	float * getMaxDecayRef() { return &fftData.maxDecay; };
+	float * getPeakDecayRef() { return &fftData.peakDecay; };
+	float * getThresholdRef() { return &fftData.cutThreshold; };
+	bool * getUseNormValsRef() { return &useNormVals; }
+
 private:
 
 	ci::audio::MonitorNodeRef monitorNode;
