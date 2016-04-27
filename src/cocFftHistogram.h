@@ -1,49 +1,78 @@
 #pragma once
 
-#include "CinderImGui.h"
 #include "cinder/audio/audio.h"
 
 namespace coc {
+
+struct FftData {
+	int size;
+	std::vector<float> data;
+	std::vector<float> dataNorm;
+	std::vector<float> dataMax;
+	std::vector<float> dataPeak;
+	std::vector<int> dataCut;
+	float maxDecay;
+	float peakValue;
+	float peakDecay;
+	float peakAverage;
+	float cutThreshold;
+	float linearEQIntercept;
+	float linearEQSlope;
+};
 
 
 class FftHistogram {
 
 public:
 
-	void setup( string _label, int _fftSize ) {
+	void setup( std::string _label, int _fftSize );
 
-		label = _label;
-		auto ctx = ci::audio::Context::master();
+	void connectNode( ci::audio::GainNodeRef _ref );
+	void connectNode( ci::audio::BufferPlayerNodeRef _ref );
 
-		// By providing an FFT size double that of the window size, we 'zero-pad' the analysis data, which gives
-		// an increase in resolution of the resulting spectrum data.
-		auto monitorFormat = ci::audio::MonitorSpectralNode::Format().fftSize( _fftSize ).windowSize( _fftSize/2 );
-		monitorSpectralNode = ctx->makeNode( new audio::MonitorSpectralNode( monitorFormat ) );
-
-	}
-
-	void connectNode( audio::GainNodeRef _ref ) { _ref >> monitorSpectralNode; }
-	void connectNode( audio::BufferPlayerNodeRef _ref ) { _ref >> monitorSpectralNode; }
-
-	void update() {
-		magSpectrum = monitorSpectralNode->getMagSpectrum();
-	}
+	void update();
 
 
-	void updateUI() {
-		if (magSpectrum.size()) ui::PlotHistogram(label.c_str(), &magSpectrum[0], magSpectrum.size(), 0, NULL, 0.0f, 1.0f, glm::ivec2(0,100) );
+	void updateUI();
 
-	}
+	// GETTERS / SETTERS
 
-	int getSize() { return magSpectrum.size(); }
-	float getValueAtIndex( int _i ) { return magSpectrum[_i]; }
+	void setThreshold(float value);
+
+	float getThreshold();
+
+	float getAveragePeak();
+
+	void setPeakDecay(float value);
+
+	float getPeakDecay();
+
+	void setMaxDecay(float value);
+
+	float getMaxDecay();
+
+	int getSize();
+
+	const std::vector<float> & getFftRawData();
+
+	const std::vector<float> & getFftNormData();
+
+	const std::vector<float> & getFftPeakData();
+
+	const std::vector<int> & getGlitchData();
+
+	bool setUseNormVals( bool _use );
 
 
 private:
+
 	ci::audio::MonitorNodeRef			monitorNode;
 	ci::audio::MonitorSpectralNodeRef	monitorSpectralNode;
 	std::vector<float>					magSpectrum;
 	std::string 						label;
+
+	FftData								fftData;
+	bool 								useNormVals = false;
 
 };//class FftHistogram
 
