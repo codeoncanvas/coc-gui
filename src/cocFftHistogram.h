@@ -31,48 +31,38 @@ public:
 	void connectNode( ci::audio::BufferPlayerNodeRef _ref );
 
 	void update();
-
-
 	void updateUI();
 
 	// GETTERS / SETTERS
 
-	void setThreshold(float value);
-
+	void setThreshold( float value );
 	float getThreshold();
 
 	float getAveragePeak();
-
-	void setPeakDecay(float value);
-
+	void setPeakDecay( float value );
 	float getPeakDecay();
 
-	void setMaxDecay(float value);
-
+	void setMaxDecay( float value );
 	float getMaxDecay();
 
 	int getSize();
 
-	const std::vector<float> & getFftRawData();
-
-	const std::vector<float> & getFftNormData();
-
-	const std::vector<float> & getFftPeakData();
-
-	const std::vector<int> & getGlitchData();
+	const std::vector<float> &getFftRawData();
+	const std::vector<float> &getFftNormData();
+	const std::vector<float> &getFftPeakData();
+	const std::vector<int> &getGlitchData();
 
 	bool setUseNormVals( bool _use );
 
-
 private:
 
-	ci::audio::MonitorNodeRef			monitorNode;
-	ci::audio::MonitorSpectralNodeRef	monitorSpectralNode;
-	std::vector<float>					magSpectrum;
-	std::string 						label;
+	ci::audio::MonitorNodeRef monitorNode;
+	ci::audio::MonitorSpectralNodeRef monitorSpectralNode;
+	std::vector<float> magSpectrum;
+	std::string label;
 
-	FftData								fftData;
-	bool 								useNormVals = false;
+	FftData fftData;
+	bool useNormVals = false;
 
 };//class FftHistogram
 
