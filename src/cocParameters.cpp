@@ -48,9 +48,28 @@ void Parameters::save( std::string _filename )
 		xml.push_back( p );
 	}
 
+
+	#ifndef CINDER_LINUX_EGL_RPI2
+
 	xml.write( ci::writeFile( ci::app::getAssetPath( _filename ) ) );
 
+	#else
+	//temp workaround for xml bug
+	string filePath = ci::app::getAssetPath( _filename ).generic_string();
+	ofstream tmp(filePath);
+	if (tmp.is_open())
+	{
+		tmp << xml;
+		tmp.close();
+	}
+	else {
+		CI_LOG_E("Failed to save file");
+	}
+
+	#endif
+
 	CI_LOG_I( "Saved GUI: " <<  params.size() << " parameters");
+
 
 }
 
@@ -101,7 +120,6 @@ void Parameters::load( std::string _filename )
 			}
 		}
 	}
-
 	CI_LOG_I( "Loaded GUI: " <<  params.size() << " parameters");
 
 }
