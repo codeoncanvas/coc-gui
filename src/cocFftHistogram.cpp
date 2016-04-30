@@ -176,6 +176,20 @@ void FftHistogram::updateUI()
 
 // GETTERS / SETTERS
 
+float FftHistogram::getAverageVolume() {
+	float total = 0;
+	for (int i=0; i<fftData.size; i++) total += audio::linearToDecibel( fftData.data[i] );
+	return total/fftData.size;
+}
+
+float FftHistogram::getMaxVolume() {
+	float max = 0;
+	for (int i=0; i<fftData.size; i++) {
+		if (fftData.data[i]  > max ) max = fftData.data[i];
+	}
+	return max;
+}
+
 void FftHistogram::setThreshold( float value )
 {
 //		value = ofClamp(value, 0, 1);

@@ -54,6 +54,9 @@ public:
 
 	bool setUseNormVals( bool _use );
 
+	float getAverageVolume();
+	float getMaxVolume();
+
 	// FOR GUI:
 
 	float * getMaxDecayRef() { return &fftData.maxDecay; };
