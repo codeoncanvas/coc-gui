@@ -52,6 +52,8 @@ public:
 	const std::vector<float> &getFftPeakData();
 	const std::vector<int> &getGlitchData();
 
+	const std::vector<float> &getFftRawDataGrouped( int num );
+
 	bool setUseNormVals( bool _use );
 
 	float getAverageVolume();
@@ -73,6 +75,8 @@ private:
 
 	FftData fftData;
 	bool useNormVals = false;
+
+	std::vector<float> dataGrouped;
 
 };//class FftHistogram
 
