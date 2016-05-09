@@ -59,6 +59,8 @@ public:
 	float getAverageVolume();
 	float getMaxVolume();
 
+	void  setIsMirrored( bool _b ) { isMirrored = _b; }
+
 	// FOR GUI:
 
 	float * getMaxDecayRef() { return &fftData.maxDecay; };
@@ -66,7 +68,10 @@ public:
 	float * getThresholdRef() { return &fftData.cutThreshold; };
 	bool * getUseNormValsRef() { return &useNormVals; }
 
+
 private:
+
+	void mirrorAudioData( FftData & audioData);
 
 	ci::audio::MonitorNodeRef monitorNode;
 	ci::audio::MonitorSpectralNodeRef monitorSpectralNode;
@@ -75,6 +80,7 @@ private:
 
 	FftData fftData;
 	bool useNormVals = false;
+	bool isMirrored = false;
 
 	std::vector<float> dataGrouped;
 
