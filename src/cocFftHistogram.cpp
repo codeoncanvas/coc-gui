@@ -136,6 +136,27 @@ void FftHistogram::update()
 
 	fftData.peakAverage /= fftData.size;
 
+	//todo: optimise by applying to raw data instead
+	if(isMirrored) {
+		mirrorAudioData(fftData);
+	}
+
+}
+
+void FftHistogram::mirrorAudioData( FftData & audioData) {
+	int audioDataSizeHalf;
+	audioDataSizeHalf = (int)(audioData.size * 0.5);
+
+	for(int i=0; i<audioDataSizeHalf; i++) {
+		int j = audioData.size - 1;
+		int k = j - i;
+
+		audioData.dataNorm[k] = audioData.dataNorm[i];
+		audioData.dataMax[k] = audioData.dataMax[i];
+		audioData.dataPeak[k] = audioData.dataPeak[i];
+		audioData.dataCut[k] = audioData.dataCut[i];
+		audioData.data[k] = audioData.data[i];
+	}
 }
 
 
@@ -230,6 +251,31 @@ float FftHistogram::getMaxDecay()
 
 int FftHistogram::getSize()
 { return fftData.data.size(); }
+
+
+const std::vector<float> &FftHistogram::getFftRawDataGrouped( int num )
+{
+	if (num >= fftData.size) return fftData.data;
+
+	int groupSize = fftData.size / num;
+	dataGrouped.clear();
+	dataGrouped.resize(num);
+
+	int counter = 0;
+	for (int i=0; counter < dataGrouped.size(); i++) {
+
+		dataGrouped[counter] += fftData.data[i];
+
+		if ( i != 0 && i % groupSize == 0) {
+			dataGrouped[counter] /= groupSize;
+			counter++;
+		}
+
+	}
+
+	return dataGrouped;
+}
+
 
 const vector<float> &FftHistogram::getFftRawData()
 {
