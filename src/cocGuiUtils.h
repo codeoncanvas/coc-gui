@@ -1,3 +1,22 @@
+/**
+ *
+ *      ┌─┐╔═╗┌┬┐┌─┐
+ *      │  ║ ║ ││├┤
+ *      └─┘╚═╝─┴┘└─┘
+ *   ┌─┐┌─┐╔╗╔┬  ┬┌─┐┌─┐
+ *   │  ├─┤║║║└┐┌┘├─┤└─┐
+ *   └─┘┴ ┴╝╚╝ └┘ ┴ ┴└─┘
+ *
+ * Copyright (c) 2016 Code on Canvas Pty Ltd, http://CodeOnCanvas.cc
+ *
+ * This software is distributed under the MIT license
+ * https://tldrlegal.com/license/mit-license
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code
+ *
+ **/
+
 #pragma once
 
 #include "cinder/Cinder.h"
@@ -9,7 +28,7 @@
 
 
 namespace coc {
-    
+
     /*
      Edits imgui.ini file to move GUI to different display on restart
      Assumes displays are same width in single row
@@ -24,12 +43,12 @@ namespace coc {
 
     static void moveGuiToDisplay( int _id, int _width )
     {
-        
+
         std::string path = ( ci::app::getAssetPath( "" ) / "imgui.ini" ).string();
         std::ifstream fileIn(path.c_str());
         std::string line;
         std::string newFile = "";
-        
+
         while (std::getline(fileIn, line))
         {
             if (line.substr(0,4) == "Pos=") {
@@ -44,11 +63,11 @@ namespace coc {
             }
         }
         fileIn.close();
-        
+
         std::ofstream fileOut(path.c_str());
         fileOut << newFile;
         fileOut.close();
-        
+
     }
-    
+
 }//namespace coc
