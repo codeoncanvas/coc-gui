@@ -24,7 +24,7 @@ namespace coc {
 
 using namespace std;
 
-Parameters::Parameters(){}
+Parameters::Parameters() : bVerbose(false) {}
 Parameters* Parameters::pInst = nullptr;
 Parameters* Parameters::instance()
 {
@@ -98,9 +98,9 @@ void Parameters::save( std::string _filename )
 
 	#endif
 
-	CI_LOG_I( "Saved GUI: " <<  params.size() << " parameters");
-
-
+    if(bVerbose) {
+        CI_LOG_I( "Saved GUI: " <<  params.size() << " parameters");
+    }
 }
 
 void Parameters::load( std::string _filename )
@@ -161,8 +161,10 @@ void Parameters::load( std::string _filename )
 			}
 		}
 	}
-	CI_LOG_I( "Loaded GUI: " <<  params.size() << " parameters");
-
+    
+    if(bVerbose) {
+        CI_LOG_I( "Loaded GUI: " <<  params.size() << " parameters");
+    }
 }
 
 }//namespace coc

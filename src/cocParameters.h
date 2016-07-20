@@ -78,6 +78,7 @@ public:
 	void save( std::string _filename = "config_params.xml" );
 	void load( std::string _filename = "config_params.xml" );
 
+    void setVerbose(bool value) { bVerbose = value; }
 
 	static Parameters* instance();
 
@@ -86,6 +87,8 @@ private:
 	static Parameters* pInst;
 
 	std::vector<coc::Parameter> params;
+    
+    bool bVerbose;
 };
 
 static Parameters* parameters() { return Parameters::instance(); }
