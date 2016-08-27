@@ -61,7 +61,7 @@ ci::vec2 GuiQuad::getCorner( int _i )
 
 ci::vec2 GuiQuad::getCornerNormalised( int _i )
 {
-	return corners[_i].rect.getCenter() / size;
+	return corners[_i].rect.getCenter() / (vec2) size;
 }
 
 void GuiQuad::updateGui( gl::TextureRef _tex)
