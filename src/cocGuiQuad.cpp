@@ -27,22 +27,41 @@ using namespace ci::app;
 using namespace std;
 
 
+GuiQuad::GuiQuad()
+{
+
+}
+
 void GuiQuad::setup( ci::ivec2 _size )
 {
 	size = _size;
 	fbo.setup( size );
 
-	int w = 10;
-	for ( Rectf &r : rects) r = Rectf(0,0,w,w);
-	rects[0].offsetCenterTo( vec2(0,0) );//UL
-	rects[1].offsetCenterTo( vec2(size.x,0) );//UR
-	rects[2].offsetCenterTo( vec2(size.x,size.y) );//LR
-	rects[3].offsetCenterTo( vec2(0,size.y) );//LL
+	int w = 20;
+	for ( corner &c : corners) c.rect = Rectf(0,0,w,w);
+	corners[0].rect.offsetCenterTo( vec2(0,0) );//UL
+	corners[1].rect.offsetCenterTo( vec2(size.x,0) );//UR
+	corners[2].rect.offsetCenterTo( vec2(size.x,size.y) );//LR
+	corners[3].rect.offsetCenterTo( vec2(0,size.y) );//LL
+
+}
+
+void GuiQuad::registerParams( coc::Parameters *_params, std::string _saveName )
+{
+	_params->setVerbose(true);
+	for (int i=0; i<4; i++) {
+		_params->registerParam(_saveName + toString(i), &corners[i].rect );
+	}
 }
 
 ci::vec2 GuiQuad::getCorner( int _i )
 {
-	return rects[_i].getCenter();
+	return corners[_i].rect.getCenter();
+}
+
+ci::vec2 GuiQuad::getCornerNormalised( int _i )
+{
+	return corners[_i].rect.getCenter() / size;
 }
 
 void GuiQuad::updateGui( gl::TextureRef _tex)
@@ -52,12 +71,12 @@ void GuiQuad::updateGui( gl::TextureRef _tex)
 	gl::draw( _tex, fbo.getTextureRef()->getBounds() );
 
 	for (int i=0; i<4; i++) {
-		gl::drawSolidRect( rects[i] );
+		gl::drawSolidRect( corners[i].rect );
 		if (i==3) {
-			gl::drawLine( rects[i].getCenter(), rects[0].getCenter());
+			gl::drawLine( corners[i].rect.getCenter(), corners[0].rect.getCenter());
 		}
 		else {
-			gl::drawLine( rects[i].getCenter(), rects[i+1].getCenter());
+			gl::drawLine( corners[i].rect.getCenter(), corners[i+1].rect.getCenter());
 		}
 
 	}
@@ -74,88 +93,32 @@ void GuiQuad::updateGui( gl::TextureRef _tex)
 
 		if(ui::GetIO().MouseClicked[0]) {
 
-			CI_LOG_V("mouse down");
 			isMouseDown = true;
+
+			for (int i=0; i<4; i++) {
+				if (corners[i].rect.contains(cursorLocalPos)) {
+					corners[i].isSelected = true;
+					selected = i;
+					break;
+				}
+			}
 		}
 		else if(ui::GetIO().MouseReleased[0]) {
-			CI_LOG_V("mouse up");
+			selected = -1;
+			for ( corner &c : corners) c.isSelected = false;
 			isMouseDown = false;
 		}
 		else if (isMouseDown){ //dragging
-			CI_LOG_V("mouse drag");
+			corners[selected].rect.offsetCenterTo(cursorLocalPos);
 		}
-
 
 	}
 	else {
-		isSelected = false;
+		selected = -1;
+		for ( corner &c : corners) c.isSelected = false;
 		isMouseDown = false;
 	}
 
-
-
-//	ImVec2 cursorScreenPos = ImGui::GetCursorScreenPos();
-//
-//	ui::ImageButton(timelineFbo.getTextureRef(), timelineFbo.getFboRef()->getSize(), ImVec2(0,1), ImVec2(1,0), 0);
-//
-//	bTimelineOver = ui::IsItemHovered();
-//	bTimelineOver.update();
-//
-//	if(bTimelineOver == true) {
-//
-//		ImVec2 cursorTimelinePos = ImVec2(ui::GetIO().MousePos.x - cursorScreenPos.x, ui::GetIO().MousePos.y - cursorScreenPos.y);
-//		// TODO: the padding around ui::ImageButton is added to the cursor position.
-//		// TODO: need to remove padding around ui::ImageButton for cursor positions to be 100% correct.
-//
-//		//------------------------------------------------------ mouse down.
-//		if(ui::GetIO().MouseClicked[0]) {
-//
-//			TimelineButton * buttonHit = NULL;
-//			for(int i=0; i<appButtons.size(); i++) {
-//				TimelineButton * button = &appButtons[i];
-//				bool bHit = button->rect.isInside(cursorTimelinePos.x, cursorTimelinePos.y);
-//				if(bHit == true) {
-//					buttonHit = button;
-//					break;
-//				}
-//			}
-//
-//			for(int i=0; i<appButtons.size(); i++) {
-//				TimelineButton * button = &appButtons[i];
-//				if(buttonHit == button) {
-//					button->bSelected = !button->bSelected;
-//					if(button->bSelected == true) {
-//						appIndexSelected = i;
-//					} else {
-//						appIndexSelected = -1;
-//					}
-//				} else {
-//					if(buttonHit != NULL) {
-//						button->bSelected = false;
-//					}
-//				}
-//			}
-//
-//			bSeeking = scrubberRect.isInside(cursorTimelinePos.x, cursorTimelinePos.y);
-//		}
-//
-//		//------------------------------------------------------ mouse up.
-//		if(ui::GetIO().MouseReleased[0]) {
-//
-//			bSeeking = false;
-//		}
-//
-//		if(bSeeking ==  true) {
-//			timeSeek = coc::map(cursorTimelinePos.x, scrubberRect.x1, scrubberRect.x2, 0.0, appTimeTotal, true);
-//		}
-//	}
-//
-//	bool bTimelineOut = true;
-//	bTimelineOut = bTimelineOut && (bTimelineOver == false);
-//	bTimelineOut = bTimelineOut && (bTimelineOver.hasChanged());
-//	if(bTimelineOut == true) {
-//		bSeeking = false;
-//	}
 }
 
 }

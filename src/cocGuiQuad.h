@@ -22,27 +22,40 @@
 #include "cinder/app/App.h"
 #include "CinderImGui.h"
 #include "cocFboWrapper.h"
+#include "cocParameters.h"
 
 namespace coc {
+
+
+struct corner {
+	ci::Rectf rect;
+	bool isSelected = false;
+};
 
 class GuiQuad {
 
 public:
 
+	GuiQuad();
+
 	void setup( ci::ivec2 _size );
+
+	void registerParams( coc::Parameters *_params, std::string _saveName );
 
 	void updateGui( ci::gl::TextureRef _tex );
 
 	ci::vec2 getCorner( int _i );
 
+	ci::vec2 getCornerNormalised( int _i );
+
 protected:
 
-	ci::Rectf	rects[4];
+	corner	corners[4];
 
 	coc::FboWrapper	fbo;
 
 	bool isMouseDown = false;
-	bool isSelected = false;
+	int selected = -1;
 
 	ci::ivec2 size = ci::vec2(0,0);
 
