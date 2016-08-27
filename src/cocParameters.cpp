@@ -73,6 +73,12 @@ void Parameters::save( std::string _filename )
                 p.setAttribute( "b", (*(ci::ColorA*) params[i].val).b );
                 p.setAttribute( "a", (*(ci::ColorA*) params[i].val).a );
                 break;
+			case PARAM_RECT:
+				p.setAttribute( "x1", (*(ci::Rectf*) params[i].val).x1 );
+				p.setAttribute( "y1", (*(ci::Rectf*) params[i].val).y1 );
+				p.setAttribute( "x2", (*(ci::Rectf*) params[i].val).x2 );
+				p.setAttribute( "y2", (*(ci::Rectf*) params[i].val).y2 );
+				break;
 		}
 
 		xml.push_back( p );
@@ -156,6 +162,12 @@ void Parameters::load( std::string _filename )
                         (*(ci::ColorA *) params[i].val).b = parameter->getAttributeValue<float>( "b", 0 );
                         (*(ci::ColorA *) params[i].val).a = parameter->getAttributeValue<float>( "a", 0 );
                         break;
+					case PARAM_RECT:
+						(*(ci::Rectf *) params[i].val).x1 = parameter->getAttributeValue<float>( "x1", 0 );
+						(*(ci::Rectf *) params[i].val).y1 = parameter->getAttributeValue<float>( "y1", 0 );
+						(*(ci::Rectf *) params[i].val).x2 = parameter->getAttributeValue<float>( "x2", 0 );
+						(*(ci::Rectf *) params[i].val).y2 = parameter->getAttributeValue<float>( "y2", 0 );
+						break;
 				}
 
 			}
