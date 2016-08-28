@@ -29,7 +29,7 @@ using namespace std;
 
 GuiQuad::GuiQuad()
 {
-
+	colOutline = Color(218/255.0f,15/255.0f,53/255.0f);
 }
 
 void GuiQuad::setup( ci::ivec2 _size )
@@ -64,12 +64,19 @@ ci::vec2 GuiQuad::getCornerNormalised( int _i )
 	return corners[_i].rect.getCenter() / (vec2) size;
 }
 
+ci::vec2 GuiQuad::getLastCursorLocalPos()
+{
+	return cursorLocalPos;
+}
+
 void GuiQuad::updateGui( gl::TextureRef _tex)
 {
 	fbo.bind();
+
 	gl::color(Color(1,1,1));
 	gl::draw( _tex, fbo.getTextureRef()->getBounds() );
 
+	gl::ScopedColor col( colOutline );
 	for (int i=0; i<4; i++) {
 		gl::drawSolidRect( corners[i].rect );
 		if (i==3) {
@@ -89,7 +96,7 @@ void GuiQuad::updateGui( gl::TextureRef _tex)
 
 	if(ui::IsItemHovered()) {
 
-		ImVec2 cursorLocalPos = ImVec2(ui::GetIO().MousePos.x - cursorScreenPos.x, ui::GetIO().MousePos.y - cursorScreenPos.y);
+		cursorLocalPos = ImVec2(ui::GetIO().MousePos.x - cursorScreenPos.x, ui::GetIO().MousePos.y - cursorScreenPos.y);
 
 		if(ui::GetIO().MouseClicked[0]) {
 

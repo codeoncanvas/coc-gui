@@ -48,6 +48,8 @@ public:
 
 	ci::vec2 getCornerNormalised( int _i );
 
+	ci::vec2 getLastCursorLocalPos();
+
 protected:
 
 	corner	corners[4];
@@ -58,6 +60,9 @@ protected:
 	int selected = -1;
 
 	ci::ivec2 size = ci::vec2(0,0);
+	ci::ivec2 cursorLocalPos = ci::vec2(0,0);
+
+	ci::Color	colOutline;
 
 };//class cocGuiQuad
 
