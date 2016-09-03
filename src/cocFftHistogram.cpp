@@ -316,7 +316,7 @@ const vector<int> &FftHistogram::getGlitchData()
 	return fftData.dataCut;
 }
 
-bool FftHistogram::setUseNormVals( bool _use )
+void FftHistogram::setUseNormVals( bool _use )
 { useNormVals = _use; };
 
 }//namespace coc

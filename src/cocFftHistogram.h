@@ -73,7 +73,7 @@ public:
 
 	const std::vector<float> &getFftRawDataGrouped( int num );
 
-	bool setUseNormVals( bool _use );
+	void setUseNormVals( bool _use );
 
 	float getAverageVolume();
 	float getMaxVolume();
