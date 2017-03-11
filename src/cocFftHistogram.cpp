@@ -179,7 +179,7 @@ void FftHistogram::mirrorAudioData( FftData & audioData) {
 }
 
 
-void FftHistogram::updateUI()
+void FftHistogram::updateUI( bool allowOverlay )
 {
 
 	if ( fftData.data.size() ) {
@@ -196,7 +196,8 @@ void FftHistogram::updateUI()
 		static int labelW = 28;
 		static int padding = 4;
 		p.x += padding;
-		float w = (ui::GetCursorScreenPos().x - p.x - labelW - padding) / fftData.size;
+		width = ui::GetCursorScreenPos().x - p.x - labelW - padding;
+		float w = (float) width / fftData.size;
 		ImDrawList *draw_list = ui::GetWindowDrawList();
 		static ImVec4 col = ImVec4( 0.92f, 0.18f, 0.29f, 0.86f );
 		const ImU32 col32 = ImColor( col );
@@ -209,7 +210,7 @@ void FftHistogram::updateUI()
 			draw_list->AddLine( ImVec2( newP.x, newP.y ), ImVec2( newP.x + w -1, newP.y ), col32 );
 		}
 
-		ui::Text( "\n" );
+		if (!allowOverlay) ui::Text( "\n" );
 	}
 
 }

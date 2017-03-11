@@ -50,7 +50,9 @@ public:
 	void connectNode( ci::audio::BufferPlayerNodeRef _ref );
 
 	void update();
-	void updateUI();
+	void updateUI( bool allowOverlay = false);
+	int width = 0;
+	int getWidth() { return width; }
 
 	// GETTERS / SETTERS
 
