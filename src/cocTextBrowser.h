@@ -96,7 +96,7 @@ private:
 
 		if (p.generic_string() != "") {
 
-			for ( boost::filesystem::directory_iterator it( p ); it != boost::filesystem::directory_iterator(); ++it )
+			for ( ci::fs::directory_iterator it( p ); it != ci::fs::directory_iterator(); ++it )
 			{
 				if ( ci::fs::is_regular_file( *it ) )
 				{
