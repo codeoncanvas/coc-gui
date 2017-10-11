@@ -89,13 +89,18 @@ public:
 	float * getThresholdRef() { return &fftData.cutThreshold; };
 	bool * getUseNormValsRef() { return &useNormVals; }
 
+	ci::audio::MonitorSpectralNodeRef getMonitorSpectralNodeRef() { monitorSpectralNode; }
+	int getFreqForBin( int i ) {
+		if (!monitorSpectralNode) return 0;
+		return monitorSpectralNode->getFreqForBin( i );
+	}
 
 private:
 
 	void mirrorAudioData( FftData & audioData);
 
-	ci::audio::MonitorNodeRef monitorNode;
-	ci::audio::MonitorSpectralNodeRef monitorSpectralNode;
+	ci::audio::MonitorNodeRef monitorNode = nullptr;
+	ci::audio::MonitorSpectralNodeRef monitorSpectralNode = nullptr;
 	std::vector<float> magSpectrum;
 	std::string label;
 
