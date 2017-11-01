@@ -26,8 +26,8 @@ if( NOT TARGET CoC-Gui )
     endif()
 
     # Add Cinder-ImGui block as a dependency
-    get_filename_component( CINDER-IMGUI_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/../../../ImGui/proj/cmake" ABSOLUTE )
-    find_package( Cinder-ImGui REQUIRED PATHS "${CINDER-IMGUI_MODULE_PATH}" )
+    get_filename_component( IMGUI_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/../../../Cinder-ImGui/proj/cmake" ABSOLUTE )
+    find_package( Cinder-ImGui REQUIRED PATHS "${IMGUI_MODULE_PATH}" )
     if (Cinder-ImGui_FOUND)
         add_dependencies( CoC-Gui Cinder-ImGui )
         target_link_libraries( CoC-Gui PUBLIC Cinder-ImGui)
