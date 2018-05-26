@@ -2,7 +2,7 @@
 <cinder>
 <block
 	name="CoC-Gui"
-	id=""
+	id="cc.codeoncanvas.gui"
 	author="Rene Christen"
 	summary="Wrapper and utility functions for use with Cinder-Imgui."
 	license=""
